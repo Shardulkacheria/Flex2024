@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getAllResumes, deleteResume } from '../api/resumeApi'; // Make sure to implement these API calls
+import { getAllResumes, deleteResume } from '../api/resumeApi';
 import { Link } from 'react-router-dom/dist';
 
 const ResumesList = () => {
   const [resumes, setResumes] = useState([]);
   const [message, setMessage] = useState('');
 
-  // Fetch all resumes from the backend
   const fetchResumes = async () => {
     try {
       const response = await getAllResumes();
@@ -17,12 +16,11 @@ const ResumesList = () => {
     }
   };
 
-  // Delete a resume by its ID
   const handleDelete = async (id) => {
     try {
       const response = await deleteResume(id);
       setMessage(response.data.message);
-      fetchResumes(); // Re-fetch resumes after deletion
+      fetchResumes();
     } catch (error) {
       console.error('Error deleting resume:', error);
       setMessage('Error deleting resume');
@@ -30,23 +28,47 @@ const ResumesList = () => {
   };
 
   useEffect(() => {
-    fetchResumes(); // Fetch resumes on component mount
+    fetchResumes();
   }, []);
 
   return (
-    <div>
-      <h2>Resumes List</h2>
-      {message && <p>{message}</p>}
-      <ul>
-        {resumes.map((resume) => (
-          <li key={resume._id}>
-            <strong>{resume.name}</strong> - {resume.email}
-            <button onClick={() => handleDelete(resume._id)}>Delete</button>
-            <Link to={`/resume/${resume._id}`}>View</Link>
-            <Link to={`/update-resume/${resume._id}`}>Update</Link>
-          </li>
-        ))}
-      </ul>
+    <div className="min-h-screen  p-6">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-center  mb-8">Resumes List</h2>
+        
+        {message && <p className="text-center text-green-500 mb-4">{message}</p>}
+        
+        <ul className="space-y-4">
+          {resumes.map((resume) => (
+            <li key={resume._id} className="bg-white shadow-md rounded-lg p-6 flex justify-between items-center">
+              <div>
+                <strong className="text-lg font-semibold text-gray-800">{resume.name}</strong>
+                <p className="text-gray-600">{resume.email}</p>
+              </div>
+              <div className="flex space-x-4">
+                <Link
+                  to={`/resume/${resume._id}`}
+                  className="text-blue-600 hover:underline font-semibold"
+                >
+                  View
+                </Link>
+                <Link
+                  to={`/update-resume/${resume._id}`}
+                  className="text-blue-600 hover:underline font-semibold"
+                >
+                  Update
+                </Link>
+                <button
+                  onClick={() => handleDelete(resume._id)}
+                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-lg transition duration-200"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

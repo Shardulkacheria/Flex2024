@@ -18,20 +18,31 @@ const ResumeDetail = () => {
     fetchResume();
   }, [id]);
 
-  if (!resume) return <p>Loading...</p>;
+  if (!resume) return <p className="text-center  mt-10">Loading...</p>;
 
   return (
-    <div>
-      <h2>Resume Details</h2>
-      <p>Email: {resume.email}</p>
-      <p>Skills: {resume.skills.join(', ')}</p>
+    <div className="min-h-screen  p-6 flex items-center justify-center">
+      <div className="bg-white shadow-lg rounded-lg max-w-lg w-full p-8 space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800 text-center">Resume Details</h2>
 
-      <h3>Interview Questions</h3>
-      <ul>
-        {resume.interviewQuestions.map((question, index) => (
-          <li key={index}>{question}</li>
-        ))}
-      </ul>
+        <div className="space-y-4">
+          <p className="text-gray-700">
+            <span className="font-semibold">Email:</span> {resume.email}
+          </p>
+          <p className="text-gray-700">
+            <span className="font-semibold">Skills:</span> {resume.skills.join(', ')}
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-2xl font-semibold text-gray-800 mb-3">Interview Questions</h3>
+          <ul className="list-disc list-inside space-y-2 text-gray-700">
+            {resume.interviewQuestions.map((question, index) => (
+              <li key={index}>{question}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

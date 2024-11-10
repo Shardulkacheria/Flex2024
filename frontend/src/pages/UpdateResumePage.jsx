@@ -9,7 +9,7 @@ function UpdateResumePage() {
 
   return (
     <div>
-      <h1>Update Resume</h1>
+
       <ResumeUpdateForm resumeId={id} />
     </div>
   );

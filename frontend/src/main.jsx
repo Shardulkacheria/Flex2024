@@ -5,7 +5,7 @@ import App from './App';
 import ResumeList from './components/ResumeList';
 import ResumeDetail from './components/ResumeDetail';
 import UpdateResumePage from './pages/UpdateResumePage';
-
+import './index.css'
 ReactDOM.render(
   <Router>
     <Routes>
