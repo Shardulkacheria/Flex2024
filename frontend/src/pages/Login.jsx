@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import {API_URL} from "../api/resumeApi"
 const Login = () => {
   const { isAuthenticated ,login } = useAuth();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/users/login', {
+            const response = await axios.post({API_URL}`/users/login`, {
                 username,
                 password
             });

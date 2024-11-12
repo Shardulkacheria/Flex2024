@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import {API_URL} from "../api/resumeApi"
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', formData);
+      const response = await axios.post({API_URL}`/users/register`, formData);
       setMessage(response.data.message);
     } catch (error) {
       setMessage('An error occurred. Please try again.');
