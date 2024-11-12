@@ -274,7 +274,8 @@ const uploadResume = async (req, res) => {
       email: extractEmail(text),
       skills: extractSkills(text),
       experience: extractExperience(text),
-      education: extractEducation(text)
+      education: extractEducation(text),
+      username: req.body.username // Add the username to resume data
     };
 
     // Mocked interview questions based on the skills in the resume
@@ -318,7 +319,56 @@ const extractEmail = (text) => {
 
 // Helper function to extract skills from the resume text
 const extractSkills = (text) => {
-  const skills = ['JavaScript', 'React', 'Node.js', 'Python', 'Java', 'C++']; // Define a list of common skills
+  const skills = [
+    // Frontend
+    'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Vue.js', 'Angular', 'Svelte', 'Next.js', 'Nuxt.js',
+    'Gatsby', 'Redux', 'Tailwind CSS', 'Bootstrap', 'jQuery', 'Chakra UI', 'SASS', 'LESS', 'Material-UI',
+  
+    // Backend
+    'Node.js', 'Express.js', 'NestJS', 'Django', 'Flask', 'Ruby on Rails', 'Spring Boot', 'ASP.NET', 'Koa.js', 
+    'Laravel', 'Phoenix', 'FastAPI', 'Symfony', 'CakePHP', 'Gin', 'Fiber', 'Hapi.js', 'Meteor', 'Go',
+  
+    // Databases
+    'MySQL', 'PostgreSQL', 'MongoDB', 'SQLite', 'MariaDB', 'Oracle', 'Firebase', 'Redis', 'Elasticsearch', 
+    'DynamoDB', 'Cassandra', 'Couchbase', 'Realm', 'InfluxDB', 'Neo4j', 'CockroachDB', 'Supabase',
+  
+    // DevOps and Cloud
+    'Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud Platform', 'Terraform', 'Ansible', 'Jenkins', 'GitLab CI/CD', 
+    'CircleCI', 'Travis CI', 'Vagrant', 'DigitalOcean', 'Heroku', 'Netlify', 'Vercel', 'NGINX', 'Apache', 
+    'Prometheus', 'Grafana', 'Cloudflare', 'Pulumi', 'Kong', 'HashiCorp Vault', 'Elastic Stack',
+  
+    // Mobile Development
+    'React Native', 'Flutter', 'Swift', 'Kotlin', 'Java (Android)', 'Objective-C', 'Ionic', 'Xamarin', 
+    'NativeScript', 'Cordova', 'PhoneGap', 'Expo',
+  
+    // Testing and Quality Assurance
+    'Jest', 'Mocha', 'Chai', 'Jasmine', 'Cypress', 'Selenium', 'Playwright', 'Puppeteer', 'JUnit', 
+    'Enzyme', 'Testing Library', 'Robot Framework', 'Appium', 'RSpec', 'Postman', 'SoapUI', 'BrowserStack',
+  
+    // Version Control and Collaboration
+    'Git', 'GitHub', 'GitLab', 'Bitbucket', 'Mercurial', 'Perforce', 'SVN', 'JIRA', 'Trello', 'Asana', 
+    'Confluence', 'Slack', 'Notion', 'Monday.com',
+  
+    // Other Programming Languages
+    'Python', 'Java', 'C++', 'C#', 'Go', 'Rust', 'Ruby', 'PHP', 'Perl', 'R', 'Swift', 'Objective-C', 'Scala', 
+    'Haskell', 'MATLAB', 'TypeScript', 'Dart', 'Lua', 'Elixir',
+  
+    // Data Science and Machine Learning
+    'TensorFlow', 'Keras', 'PyTorch', 'Scikit-Learn', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'OpenCV', 
+    'NLTK', 'SpaCy', 'Gensim', 'Hugging Face', 'Apache Spark', 'Dask', 'XGBoost', 'LightGBM', 'CatBoost',
+  
+    // Blockchain and Web3
+    'Solidity', 'Ethereum', 'Polygon', 'Truffle', 'Hardhat', 'Web3.js', 'Ethers.js', 'IPFS', 'Chainlink', 
+    'Polkadot', 'Hyperledger', 'Rust (for Solana)', 'NEAR Protocol', 'MetaMask', 'Ganache', 'Cosmos SDK',
+  
+    // Content Management Systems
+    'WordPress', 'Drupal', 'Joomla', 'Magento', 'Shopify', 'Wix', 'Ghost', 'Contentful', 'Strapi', 'Sanity',
+  
+    // Miscellaneous
+    'GraphQL', 'REST APIs', 'gRPC', 'Firebase', 'Supabase', 'Algolia', 'Pusher', 'Twilio', 'Stripe', 
+    'Auth0', 'Okta', 'Sentry', 'Segment', 'Redis', 'RabbitMQ', 'Kafka', 'OpenAPI', 'Swagger', 'OAuth',
+  ];
+   // Define a list of common skills
   const foundSkills = skills.filter(skill => text.toLowerCase().includes(skill.toLowerCase()));
   return foundSkills.length ? foundSkills : ['Not Found'];
 };
@@ -354,7 +404,9 @@ const getResume = async (req, res) => {
 // Fetch all resumes (exclude sensitive fields)
   const getAllResumes = async (req, res) => {
     try {
-      const resumes = await Resume.find(); // Fetch all resumes from the database
+      const { username } = req.query;
+      const filter = username ? { username } : {}; // Filter by username if provided
+      const resumes = await Resume.find(filter); // Fetch all resumes from the database
       res.status(200).json(resumes); // Send the resumes as response
     } catch (error) {
       console.error("Error retrieving resumes:", error);

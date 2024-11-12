@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { uploadResume } from '../api/resumeApi';
 import { Link } from 'react-router-dom/dist';
-
+import NavBar from './NavBar';
 const UploadResume = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
@@ -26,7 +26,10 @@ const UploadResume = () => {
   };
 
   return (
+    <>
+    <NavBar />
     <div className="flex justify-center items-center min-h-screen p-6 w-full">
+     
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full space-y-6">
         <h2 className="text-2xl font-bold text-gray-800 text-center">Upload Resume</h2>
         <input
@@ -61,6 +64,7 @@ const UploadResume = () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
 

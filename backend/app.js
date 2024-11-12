@@ -28,8 +28,9 @@ const upload = multer();
 
 // Routes
 const resumeRoutes = require('./routes/resumeRoutes');
-
+const userRoutes = require('./routes/userRoutes');
 // Apply multer middleware for the entire /api/resume route
+app.use('/api/users', userRoutes);
 app.use('/api/resume', upload.single('resume'), resumeRoutes);
 app.use(bodyParser.json());  // Handle JSON data in requests
 app.use('/api/resumes', resumeRoutes); // Mount the routes

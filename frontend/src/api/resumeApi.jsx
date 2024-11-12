@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const API_URL = 'https://flex2024.onrender.com/api';
+export const API_URL = 'http://localhost:5000/api';
 
 export const uploadResume = (file) => {
   const formData = new FormData();
   formData.append('resume', file);
 
+  formData.append('username',   localStorage.getItem("username")); // Add the username here
   return axios.post(`${API_URL}/resume/upload`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
@@ -14,7 +15,10 @@ export const uploadResume = (file) => {
 export const getResumeById = (id) => axios.get(`${API_URL}/resume/${id}`);
 
 export const getAllResumes = async () => {
-  return await axios.get(`${API_URL}/resumes`);
+  const username = localStorage.getItem("username"); // Get the username from local storage
+  return await axios.get(`${API_URL}/resumes`, {
+    params: { username } // Pass username as a query parameter
+  });
 };
 
 export const deleteResume = async (id) => {
@@ -24,3 +28,4 @@ export const deleteResume = async (id) => {
 export const updateResume = async (id, updatedData) => {
   return await axios.put(`${API_URL}/resume/${id}`, updatedData);
 };
+

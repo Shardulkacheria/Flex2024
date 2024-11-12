@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const resumeSchema = new mongoose.Schema({
   name: String,
   email: String,
+  username: String,
   skills: [String],
   experience: [
     {

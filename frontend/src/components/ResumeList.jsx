@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllResumes, deleteResume } from '../api/resumeApi';
 import { Link } from 'react-router-dom/dist';
-
+import NavBar from './NavBar';
 const ResumesList = () => {
   const [resumes, setResumes] = useState([]);
   const [message, setMessage] = useState('');
@@ -32,7 +32,9 @@ const ResumesList = () => {
   }, []);
 
   return (
-    <div className="min-h-screen  p-6">
+    <>
+    <NavBar/>
+     <div className="min-h-screen  p-6">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-center  mb-8">Resumes List</h2>
         
@@ -70,6 +72,8 @@ const ResumesList = () => {
         </ul>
       </div>
     </div>
+    </>
+   
   );
 };
 
