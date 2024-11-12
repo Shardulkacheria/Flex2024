@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post({API_URL}`/users/register`, formData);
+      const response = await axios.post("https://flex2024.onrender.com/api/users/register", formData);
       setMessage(response.data.message);
     } catch (error) {
       setMessage('An error occurred. Please try again.');

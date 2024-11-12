@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'http://localhost:5000/api';
+export const API_URL = 'https://flex2024.onrender.com/api';
 
 export const uploadResume = (file) => {
   const formData = new FormData();

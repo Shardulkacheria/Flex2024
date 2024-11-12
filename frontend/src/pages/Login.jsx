@@ -18,10 +18,11 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post({API_URL}`/users/login`, {
+            const response = await axios.post("https://flex2024.onrender.com/api/users/login", {
                 username,
                 password
             });
+            console.log(response)
             setMessage("Login successful");
             localStorage.setItem("isAuthenticated", "true");
             localStorage.setItem("username", username);
